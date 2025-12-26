@@ -1,0 +1,36 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/cpp
+{
+	"name": "yasl",
+	"build": {
+    "dockerfile": "../Dockerfile",
+    "context": "."
+	},
+	"runArgs": [
+		"-it", "--rm", "--name", "yasl"
+	],
+	"workspaceFolder": "/workspace",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
+	"postCreateCommand": "echo \"source /usr/share/bash-completion/completions/git\" >> ~/.bashrc",
+	"mounts": [],
+	"remoteUser": "root",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"GitHub.copilot",
+				"Gruntfuggly.todo-tree",
+				"Tyriar.sort-lines",
+				"mhutchie.git-graph",
+				"tomoki1207.pdf",
+				"waderyan.gitblame",
+				"saoudrizwan.claude-dev"
+			],
+			"settings": {
+				"github.copilot.chat.localeOverride": "ja",
+				"github.copilot.enable": {
+					"markdown": true
+				}
+			}
+		}
+	}
+}
