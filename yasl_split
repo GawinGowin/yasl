@@ -1,0 +1,88 @@
+#!/usr/local/bin/yasl
+
+{0:=:0 0:print "\n" 0:print} _print_stack0
+{1:=:1 1:print "\n" 0:print} _print_stack1
+{2:=:2 2:print "\n" 0:print} _print_stack2
+
+{
+  0                         // when set 1, show statistics
+  0:=:9 0:!:0
+  9:? (
+    "=============\n" 0:print
+    0:#:0 "stack 0: " 0:print
+    0:print "\n" 0:print
+    1:#:0 "stack 1: " 0:print
+    0:print "\n" 0:print
+    2:#:0 "stack 2: " 0:print
+    0:print "\n" 0:print
+    3:#:0 "stack 3: " 0:print
+    0:print "\n" 0:print
+  )
+} statistics
+
+
+{
+  "Error: invalid param\n" print
+  statistics
+  1 exit
+} msg_invalid
+
+{[#]} strlen
+
+{
+  0:strlen 1 != ? (
+    0:!
+    0
+  ) : (
+    0:=:0                   // dup char
+    0:(" "):0
+    0:(2 ^):0 <=:1          // " " > "char" = tmp1
+    0:("~"):0
+    0:(2 ^):0 >=:1          // "~" < "char" = tmp2
+    1:&&:0 ? (1) : (0)      // tmp1 || tmp2
+  )
+} is_char
+
+{
+  0:(= !):1                 // needle
+  0:(0):3                   // flag
+  0:strlen:2
+  0:(0):0                   // i = 0
+  2:%@ (
+    0:(%]#[):0
+    0:=:0
+    1:=:0                   // get needle
+    0:(!=):0 0:? (
+      0:print
+      3:(1 |):3
+    ) : (
+      0:(!) 3:=:0 0:? (
+        0:("\n" print)
+      )
+      3:(0 &):3
+    )
+    0:(1 +):0
+    2:(1 -):2
+  )
+  3:=:0 ? (
+    0:("\n" print)
+  )
+  0:(!!)
+  1:!
+  2:!
+  3:!
+} split
+
+{
+  3 != ? (
+    # #! msg_invalid
+  )
+  !                        // drop argv[0]
+  = is_char 0 == ? (
+    # #! msg_invalid
+  )
+  split
+} main
+
+main
+statistics
