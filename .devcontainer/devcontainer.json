@@ -10,9 +10,21 @@
 		"-it", "--rm", "--name", "yasl"
 	],
 	"workspaceFolder": "/workspace",
+	"initializeCommand": "if not exist ${localWorkspaceFolder}\\.claude.json type nul > ${localWorkspaceFolder}\\.claude.json",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
 	"postCreateCommand": "echo \"source /usr/share/bash-completion/completions/git\" >> ~/.bashrc",
-	"mounts": [],
+	"mounts": [
+		{
+			"source": "claude-configs",
+			"target": "/root/.claude",
+			"type": "volume"
+		},
+		{
+			"source": "${localWorkspaceFolder}/.claude.json",
+			"target": "/root/.claude.json",
+			"type": "bind"
+		}
+	],
 	"remoteUser": "root",
 	"customizations": {
 		"vscode": {
