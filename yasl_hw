@@ -1,0 +1,9 @@
+#!/usr/local/bin/yasl
+
+#!
+
+"world\n"
+"Hello "
+
+#
+#print
