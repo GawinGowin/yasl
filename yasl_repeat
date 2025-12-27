@@ -1,0 +1,82 @@
+#!/usr/local/bin/yasl
+{
+  "=============\n" print
+  0:#:0 "stack 0: " print
+  print "\n" print
+  1:#:0 "stack 1: " print
+  print "\n" print
+  2:#:0 "stack 2: " print
+  print "\n" print
+} statistics
+
+{0:=:0 0:print "\n" 0:print} _print_stack0
+{1:=:1 1:print "\n" 0:print} _print_stack1
+{2:=:2 2:print "\n" 0:print} _print_stack2
+{0:=:1 0:!:0} push_stack1
+{0:=:2 0:!:0} push_stack2
+{[#]} strlen
+
+{
+  "Error: invalid param\n" print
+  // statistics
+  1 exit
+} msg_invalid
+
+{
+  "Error: invalid range of value\n" print
+  // statistics
+  1 exit
+} msg_range
+
+{
+  1 push_stack2            // ret
+  0:=:1 !
+  1:strlen:1               // n = strlen(str); n = i;
+  1:%@ (                   // while (i > 0)
+    1 push_stack1 -:1      // i = i - 1;
+    %]#[:1 =:1             // get str[i], dup str[i]
+
+    "0" push_stack1
+    2 push_stack1 ^:1 >:2  // "0" > "str[i]" = tmp1
+    "9" push_stack1
+    2 push_stack1 ^:1 <:2  // "9" < "str[i]" = tmp1
+    2:||:1 ? (             // tmp1 || tmp1
+      1:(=:1 -:1)
+      0 push_stack2 2:&:2
+    )
+  )
+  1:(!!)
+  2:=:0 2:!
+} isdigit
+
+{
+  2 < ? (
+    # #! msg_invalid
+  )
+  !                        // drop argv[0]
+  = isdigit 0 == ? (
+    # #! msg_invalid
+  )
+  = 2147483647 > ? (
+    # #! msg_range
+  )
+  push_stack2
+  #
+  push_stack1
+  1:%@ (
+    1 push_stack1 1:-:1
+    2:=:2
+    2:%@(
+      1 push_stack2 2:-:2
+      0:=:0 0:print
+    )
+    2:!
+    1 push_stack2 2:+:2
+    "\n" 0:print
+    0:!:0
+  )
+  1:! 2:!
+} main
+
+main
+// statistics
