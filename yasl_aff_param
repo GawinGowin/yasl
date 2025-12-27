@@ -1,0 +1,9 @@
+#!/usr/local/bin/yasl
+
+1 -
+? ():(0 exit)
+
+!
+
+#
+#(print "\n" print)
