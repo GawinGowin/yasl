@@ -1,6 +1,5 @@
 #!/usr/local/bin/yasl
-
-!! // drop args
+#!
 
 10      // count start
 %@ (
