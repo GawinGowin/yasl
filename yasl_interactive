@@ -1,0 +1,42 @@
+#!/usr/local/bin/yasl
+
+{
+  0                         // when set 1, show statistics
+  0:=:9 0:!:0
+  9:? (
+    "=============\n" 0:print
+    0:#:0 "stack 0: " 0:print
+    0:print "\n" 0:print
+    1:#:0 "stack 1: " 0:print
+    0:print "\n" 0:print
+    2:#:0 "stack 2: " 0:print
+    0:print "\n" 0:print
+    3:#:0 "stack 3: " 0:print
+    0:print "\n" 0:print
+    4:#:0 "stack 4: " 0:print
+    0:print "\n" 0:print
+    5:#:0 "stack 5: " 0:print
+    0:print "\n" 0:print
+    6:#:0 "stack 6: " 0:print
+    0:print "\n" 0:print
+    7:#:0 "stack 7: " 0:print
+    0:print "\n" 0:print
+    8:#:0 "stack 8: " 0:print
+    0:print "\n" 0:print
+    9:#:0 "stack 9: " 0:print
+    0:print "\n" 0:print
+  )
+} statistics
+
+{
+  #!
+  1
+  %@ (
+    ! read
+    0 == ? (! 0) : (eval 1)
+  )
+  !
+} main
+
+main
+statistics
