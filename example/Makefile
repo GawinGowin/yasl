@@ -1,11 +1,11 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -O2 -std=c11
-TARGET = rgb_size_detect
+TARGET = display_b64.out
 
 all: $(TARGET)
 
-$(TARGET): rgb_size_detect.c
-	$(CC) $(CFLAGS) -o $(TARGET) rgb_size_detect.c -lm
+$(TARGET): display_b64.c
+	$(CC) $(CFLAGS) -o $(TARGET) display_b64.c -lm
 
 clean:
 	rm -f $(TARGET)
