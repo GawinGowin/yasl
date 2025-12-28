@@ -34,6 +34,44 @@
   1 exit
 } msg_invalid
 
+{
+  "Error: this image is not square\n" print
+  statistics
+  1 exit
+} msg_square
+
+{
+  1:(0):1      // is square
+  4 /
+  = 32 = * == ? (
+    1:(1 |):1
+    2:(32):2 // size
+  )
+  = 64 = * == ? (
+    1:(1 |):1
+    2:(64):2 // size
+  )
+  = 245 = * == ? (
+    1:(1 |):1
+    2:(245):2 // size
+  )
+  = 160 = * == ? (
+    1:(1 |):1
+    2:(160):2 // size
+  )
+  = 180 = * == ? (
+    1:(1 |):1
+    2:(180):2 // size
+  )
+  !
+  1:(=):0 1:!
+  = 1 == ? (
+    !
+    2:(=):0
+    2:!
+  )
+} is_square
+
 {[#]} strlen
 
 // stack_0: IO
@@ -85,6 +123,7 @@
 // stack_3: buff
 // stack_4: actual color
 // stack_5: buff color 
+// stack_6: image_size 
 {
   2:("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="):2
 
@@ -104,11 +143,18 @@
       2:!:2
       # #! msg_fille_err
     ) : (
-    strlen = 4 % ? (
+    strlen 4 % ? (
       2:!:2
       # #!
       msg_fille_err
     )
+    strlen is_square = 0 == ? (
+      2:!:2
+      # #!
+      msg_square
+    )
+    0:(=):6 0:!
+    strlen
 
     1:(0):1                     // i = 0
     0:(=):3 !                   // n = len(read())
@@ -131,7 +177,9 @@
       0:(!)
       3:(4 -):3
 
-      1:=:1 1:(256 %):1 1:(0 ==):1 1:? ("\n" 0:print)
+      1:=:1
+      6:(=):1
+      1:(4 * % 0 ==):1 1:? ("\n" 0:print)
     )
     1:!
     3:!
