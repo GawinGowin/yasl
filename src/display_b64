@@ -1,0 +1,133 @@
+#!/usr/local/bin/yasl
+
+{=:0 0:print "\n" 0:print} _print_stack
+
+{
+  1                         // when set 1, show statistics
+  0:=:9 0:!:0
+  9:? (
+    "=============\n" 0:print
+    0:#:0 "stack 0: " 0:print
+    0:print "\n" 0:print
+    1:#:0 "stack 1: " 0:print
+    0:print "\n" 0:print
+    2:#:0 "stack 2: " 0:print
+    0:print "\n" 0:print
+    3:#:0 "stack 3: " 0:print
+    0:print "\n" 0:print
+    4:#:0 "stack 4: " 0:print
+    0:print "\n" 0:print
+    5:#:0 "stack 5: " 0:print
+    0:print "\n" 0:print
+  )
+} statistics
+
+{
+  "Error: invalid file\n" print
+  statistics
+  1 exit
+} msg_fille_err
+
+{
+  "Error: invalid param\n" print
+  statistics
+  1 exit
+} msg_invalid
+
+{[#]} strlen
+
+// stack_0: IO
+// stack_1: core
+// stack_2: base64_table
+// stack_3: return value
+{// str: encoded charactor -> number
+  // 0:_print_stack // '?': needle
+  3:(0):3                   // ret
+  2:strlen:1                // (65):1
+  1:%@ (
+    1:=:2 2:(1 -):2
+    2:%]#[:1 2:!
+    0:=:0
+    1:=:0 0:==:0 0:? (
+      3:(!):3
+      1:! 1:(1 -):1 1:=:3
+      1:(! 0):1
+    ): (1:(! 1 -):1)
+  )
+  0:(!)
+  3:(=):0
+  3:!
+  1:!
+  // 0:_print_stack // 'ret': return
+} decode_char
+
+{
+
+  4:(6 <<):4 4:(4 ^):4
+  4:(12 <<):4 4:(4 ^):4
+  4:(18 <<):4 4:(4 ^):4
+  4:(4 ^):4
+  4:(| | |):4
+
+  5:("\e[48;2;"):5
+  4:(=):4 4:(16 >>):4 4:(255 &):4 4:(= !):5 5:(";" +):5
+  5:(+):5
+  4:(=):4 4:(8 >>):4 4:(255 &):4 4:(= !):5 5:(";" +):5
+  5:(+):5
+  4:(=):4 4:(255 &):4 4:(= !):5 5:("m \e[0m" +):5
+  5:(+):5
+  4:!
+  5:print
+} decode_color
+
+// void print_pixel(RGB pixel) {
+//     printf("\033[48;2;%d;%d;%dm  \033[0m", pixel.r, pixel.g, pixel.b);
+// }
+
+// stack_0: core
+// stack_1: subfunctions
+// stack_2: base64_table
+// stack_3: buff
+// stack_4: actual color
+// stack_5: buff color 
+{
+  2:("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="):2
+
+  #!
+  ! read
+  0 == ? (!) : (
+    strlen = 4 % ? (
+      2:!:2
+      # #!
+      msg_fille_err
+    )
+
+    1:(0):1                     // i = 0
+    0:(=):3 !                   // n = len(read())
+    3:%@ (
+      1:=:0 1:!
+
+      0:(3 +):0
+      0:(%]#[):0 0:decode_char:0 0:=:4 0:!
+      0:(1 -):0
+      0:(%]#[):0 0:decode_char:0 0:=:4 0:!
+      0:(1 -):0
+      0:(%]#[):0 0:decode_char:0 0:=:4 0:!
+      0:(1 -):0
+      0:(%]#[):0 0:decode_char:0 0:=:4 0:!
+      0:(4 +):0
+
+      decode_color
+
+      0:(=):1
+      0:(!)
+      3:(4 -):3
+      1:=:1 1:(32 %):1 1:(0 ==):1 1:? ("\n" 0:print)
+    )
+  )
+
+  2:(!)
+} main
+
+main
+statistics
