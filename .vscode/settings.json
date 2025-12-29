@@ -1,0 +1,12 @@
+{
+  "files.associations": {
+    "display_b64": "shellscript",
+    "yasl_aff_param": "shellscript",
+    "yasl_interactive": "shellscript",
+    "yasl_do": "shellscript",
+    "yasl_hw": "shellscript",
+    "yasl_fact": "shellscript",
+    "yasl_repeat": "shellscript",
+    "yasl_split": "shellscript"
+  }
+}
